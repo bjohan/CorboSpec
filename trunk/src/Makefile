@@ -1,7 +1,7 @@
 PRG            = main
-OBJ            = main.o #uart_command_lib.o corbomite.o
+OBJ            = main.o uart_command_lib.o corbomite.o ad4350.o
 MCU_TARGET     = atmega168
-OPTIMIZE       = -Os
+OPTIMIZE       = -O0
 
 #DEFS           =-isystem /usr/avr/include/avr/include
 DEFS           =-isystem /usr/avr/include/
@@ -41,6 +41,9 @@ doxygen:
 
 load: $(PRG).hex
 	sudo avrdude -p m168 -P usb -c avrispmkII -Uflash:w:$(PRG).hex -B 4
+
+lfuse:
+	sudo avrdude -p m168 -P usb -c avrispmkII -U lfuse:w:0xE6:m
 
 lst:  $(PRG).lst
 
