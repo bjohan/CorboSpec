@@ -19,3 +19,4 @@ void sendRegister4(uint32_t feedback_select, uint32_t divider_select,
 			uint32_t output_power);
 void sendRegister5(uint32_t ld_pin_mode);
 uint8_t readLockDetect();
+void delay(uint32_t dly);

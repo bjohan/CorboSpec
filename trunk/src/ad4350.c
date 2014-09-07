@@ -5,7 +5,7 @@ void initAD4350()
 {
 	DDRB |= _BV(PB5) | _BV(PB4) | _BV(PB3); //Outputs for data interface
 	DDRC &= ~_BV(PC0); //Input for lock detect
-	sendRegister5(3);
+	sendRegister5(2);
 	sendRegister4(0, 0, 1, 0, 0, 0, 0, 0, 1, 0);
 	sendRegister3(0,0,0);
 	sendRegister2(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -27,6 +27,7 @@ void sendWord(uint32_t word)
 {
 	PORTB &= ~_BV(PB3); //Clear LE
 	
+		delay(10);
 	for(uint32_t b = 32 ; b > 0 ; b--){
 		PORTB &= ~_BV(PB5); //Clear CLK
 		delay(10);
@@ -40,6 +41,7 @@ void sendWord(uint32_t word)
 		word <<= 1;
 	}
 
+		delay(10);
 	PORTB |= _BV(PB3); //Set LE
 }
 

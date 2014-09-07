@@ -53,7 +53,7 @@ int main(void)
 	PORTD |= _BV(PD3);
 	while(1){
 	//initAD4350();
-		//sendWord(0);
+		sendWord(0x7FAA55FE);
 		if(readLockDetect())
 			PORTD |= _BV(PD3);
 		else
@@ -61,6 +61,7 @@ int main(void)
 		/*PORTD =0; 
 		PORTD |= _BV(PD3);
 		PORTD =0;*/
+		delay(10000);
 		commandLine();
 	}
 }
