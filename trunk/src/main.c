@@ -48,20 +48,22 @@ int main(void)
 {
 	initUsart();
 	transmitStringP(PSTR("CorboSpec initialized\r\n"));
-	initAD4350();
 	DDRD |= _BV(PD3);
 	PORTD |= _BV(PD3);
+	delay(10000);
+	initAD4350();
+	test();
 	while(1){
 	//initAD4350();
-		sendWord(0x7FAA55FE);
-		if(readLockDetect())
-			PORTD |= _BV(PD3);
-		else
-			PORTD &= ~_BV(PD3);
+		//sendWord(0x7FAA55FE);
+		//if(readLockDetect())
+		//	PORTD |= _BV(PD3);
+		//else
+		//	PORTD &= ~_BV(PD3);
 		/*PORTD =0; 
 		PORTD |= _BV(PD3);
 		PORTD =0;*/
-		delay(10000);
+		//delay(10000);
 		commandLine();
 	}
 }

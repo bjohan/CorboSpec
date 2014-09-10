@@ -1,7 +1,7 @@
 PRG            = main
 OBJ            = main.o uart_command_lib.o corbomite.o ad4350.o
 MCU_TARGET     = atmega168
-OPTIMIZE       = -O0
+OPTIMIZE       = -Os
 
 #DEFS           =-isystem /usr/avr/include/avr/include
 DEFS           =-isystem /usr/avr/include/
