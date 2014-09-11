@@ -21,12 +21,19 @@ void powerLed(uint8_t on)
 		PORTD &= ~_BV(PD3);
 }
 
+void centerFrequency(int32_t f)
+{
+	setFrequency(5e7, f<<4);
+}
+
 DIG_OUT("pwr", powerLed, powerLedCmd);
 
 EVENT_OUT("cmd", testCommand, testCmd);
 
 INFORMATION_HINT("test hest", testHint);
  
+ANA_OUT("fc", "Hz", "Hz", "GHz", 137500000>>4, 4000000000>>4, centerFrequency, fre);
+
 const EventData initEvent PROGMEM = {registeredEntries};
 
 const CorbomiteEntry init PROGMEM = 
@@ -38,6 +45,7 @@ const CorbomiteEntry last PROGMEM = {LASTTYPE, "", 0};
 
 const CorbomiteEntry * const entries[] PROGMEM = {
 	&testHint,
+	&fre,
 	&testCmd,
 	&powerLedCmd,
 	&init, &last
@@ -53,6 +61,7 @@ int main(void)
 	delay(10000);
 	initAD4350();
 	test();
+	setFrequency(5e7, 4200000000);
 	while(1){
 	//initAD4350();
 		//sendWord(0x7FAA55FE);

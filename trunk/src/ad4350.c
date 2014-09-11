@@ -1,4 +1,5 @@
 #include "ad4350.h"
+#include "uart_command_lib.h"
 #define SAT1(x) if((x) > 1) (x) = 1
 
 void initAD4350()
@@ -83,6 +84,35 @@ sendRegister0(integer, frac);
 
 void setFrequency(uint32_t ref, uint32_t rf_out)
 {
+/*sendRegister4(feedback_select, divider_select,band_select_clock_divider, 
+		vco_power_down, mtld, aux_output_select, aux_output_enable,
+		aux_output_power, rf_output_enable, output_power);
+sendRegister0(integer, frac);*/
+	uint32_t fpd = 25e6;
+	uint32_t divider_select=0;
+	uint32_t integer;
+	uint32_t mod;
+	uint32_t frac;
+	uint32_t rest;
+	//Step one, select divider
+	while(rf_out < 2.2e9){
+		divider_select++;
+		rf_out<<=1;
+	}
+	if(divider_select > 7){
+		//transmitStringP(PSTR("rf_out too low"));
+	}
+	integer = rf_out/fpd;
+	rest = rf_out - integer*fpd;
+	mod = 4095;
+	frac = (rest<<6)/(fpd>>6);
+	sendRegister4(1, divider_select, 200, 0, 0, 0, 0, 0, 1, 2);
+	sendRegister1(1,2,mod);
+	//frac = 3932;
+	transmitInt(frac);
+	sendRegister0(integer, frac);
+	
+
 /*	uint32_t F_pfd = 100e3;
 	uint32_t D=0;
 	uint32_t T=0; //Prescaler???

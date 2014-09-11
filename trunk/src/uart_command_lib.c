@@ -210,10 +210,10 @@ void initUsart()
  * The integer number must fit in 7 bytes.
  * \param i the integer to be transmitted as ascii text.
 */
-void transmitInt(const int16_t i)
+void transmitInt(const int32_t i)
 {
-	static char m[8];
-	itoa(i, m, 10);
+	static char m[16];
+	ltoa(i, m, 10);
 	transmitString(m);
 }
 
@@ -325,7 +325,7 @@ int32_t getIntParameter(char *cmdLine, uint8_t num)
 	uint8_t l;
 	l=tokenToString(cmdLine, " \r\n\t", num, data, 16);
 	if(l > 0){
-		return atoi(data);
+		return atol(data);
 	}
 	return -0x7FFFFFFF;
 } 

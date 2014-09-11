@@ -31,7 +31,7 @@ void transmitP(const char *msg, uint16_t num);
 void transmitString(const char *msg);
 void transmitStringP(const char *msg);
 void initUsart();
-void transmitInt(const int16_t i);
+void transmitInt(const int32_t i);
 uint8_t executeCommand(char *cmd, uint8_t n);
 void parseCommandLine(char *cmd);
 int main_loop(void);
