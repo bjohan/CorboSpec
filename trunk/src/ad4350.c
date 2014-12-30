@@ -54,8 +54,8 @@ uint32_t band_select_clock_divider = 200;
 uint32_t vco_power_down = 0;
 uint32_t mtld = 0;
 uint32_t aux_output_select = 0;
-uint32_t aux_output_enable = 0;
-uint32_t aux_output_power = 0;
+uint32_t aux_output_enable = 1;
+uint32_t aux_output_power = 2;
 uint32_t rf_output_enable = 1;
 uint32_t output_power = 2;
 
@@ -82,18 +82,14 @@ sendRegister0(integer, frac);
 }
 
 
-void setFrequency(uint32_t ref, uint32_t rf_out)
+void setFrequency(uint64_t ref, uint64_t rf_out)
 {
-/*sendRegister4(feedback_select, divider_select,band_select_clock_divider, 
-		vco_power_down, mtld, aux_output_select, aux_output_enable,
-		aux_output_power, rf_output_enable, output_power);
-sendRegister0(integer, frac);*/
-	uint32_t fpd = 25e6;
-	uint32_t divider_select=0;
-	uint32_t integer;
-	uint32_t mod;
-	uint32_t frac;
-	uint32_t rest;
+	uint64_t fpd = 25e6;
+	uint64_t divider_select=0;
+	uint64_t integer;
+	uint64_t mod;
+	uint64_t frac;
+	uint64_t rest;
 	//Step one, select divider
 	while(rf_out < 2.2e9){
 		divider_select++;
@@ -106,49 +102,13 @@ sendRegister0(integer, frac);*/
 	rest = rf_out - integer*fpd;
 	mod = 4095;
 	frac = (rest<<6)/(fpd>>6);
-	sendRegister4(1, divider_select, 200, 0, 0, 0, 0, 0, 1, 2);
+	sendRegister5(1);
+	sendRegister4(1, divider_select, 200, 0, 0, 0, 1, 3, 1, 2);
+	sendRegister3(0, 0, 150);
+	sendRegister2(0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0);
 	sendRegister1(1,2,mod);
-	//frac = 3932;
-	transmitInt(frac);
+	//transmitInt(frac);
 	sendRegister0(integer, frac);
-	
-
-/*	uint32_t F_pfd = 100e3;
-	uint32_t D=0;
-	uint32_t T=0; //Prescaler???
-	//First select F_pfd
-	if(ref < 30e6)
-		D = 1;
-	R = ref*(1+d)/(F_pfd*(1+T));
-	if(R > 1023){ //R is too high, then set T to divide by two
-		T = 1;
-		R = ref*(1+d)/(F_pfd*(1+T));
-		if(R > 1023){ //If still to high, disable the doubler
-			D = 0;
-			R = ref*(1+d)/(F_pfd*(1+T));
-		}
-	}
-
-	if(R > 1023){
-		transmitStringP(PSTR("TODO, illegal Rselect another F_pfd\r\n"));
-		return;
-	}
-	
-	
-
-	//RF_out = (INT + FRAC/MOD)*F_pfd
-	uint32_t INT = rf_out/f_pfd;
-
-	if(INT < 75){
-		transmitStringP(PSTR("TODO, illegal INT select anoter F_pfd\r\n"));
-		return;
-	}
-	
-	uint32_t FRAC = 0;
-	uint32_t MOD = 0;	
-
-	//F_pfd = ref*(1+D)/(R*(1+T))
-*/
 }
 
 uint8_t readLockDetect()

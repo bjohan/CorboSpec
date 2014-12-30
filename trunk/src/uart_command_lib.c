@@ -18,6 +18,12 @@ volatile uint8_t dataOverrun = 0;
 
 const char nl[] PROGMEM = "\r\n";
 
+void waitTransmissionIdle()
+{
+	while(txByte >= 0);
+	while( !(UCSR0A & (1 << UDRE0)));
+}
+
 int strcmp_pn(const char *a, char *b)
 {
 	while(1){

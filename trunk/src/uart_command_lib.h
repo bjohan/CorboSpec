@@ -21,6 +21,7 @@ typedef struct{
 extern const char nl[];
 extern CommandProcessor Commands[];
 int strcmp_pn(const char *a, char *b);
+void waitTransmissionIdle();
 void copyReverse(volatile char *dst, volatile const char *src, uint8_t len);
 void copyReverseP(volatile char *dst, volatile const char *src, uint8_t len);
 void copy(volatile char *dst, volatile const char *src, uint8_t len);

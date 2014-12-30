@@ -40,7 +40,7 @@ doxygen:
 	cp doc/rtf/refman.rtf doc/out/
 
 load: $(PRG).hex
-	sudo avrdude -p m168 -P usb -c avrispmkII -Uflash:w:$(PRG).hex -B 4
+	sudo avrdude -p m168 -P usb -c avrispmkII -Uflash:w:$(PRG).hex -B 10
 
 lfuse:
 	sudo avrdude -p m168 -P usb -c avrispmkII -U lfuse:w:0xE6:m
