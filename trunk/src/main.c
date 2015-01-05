@@ -100,11 +100,11 @@ EVENT_OUT("sweep", testCommand, testCmd);
 
 INFORMATION_HINT("test hest", testHint);
  
-ANA_OUT("fstart", "Hz", "Hz", "GHz", 137500000, 2000000000, setStartFrequency, fre);
-ANA_OUT("fstop", "Hz", "Hz", "GHz", 137500000, 2000000000, setStopFrequency, stop);
-ANA_OUT("steps", "stp", "stp", "stp", 1, 4000, setSteps, stepsWidget);
-ANA_OUT("fcenter", "Hz", "Hz", "GHz", 137500000, 2000000000, setCenterFrequency, center);
-TRACE_IN("plot", "Hz", "1", "dB", "1", plot);
+ANA_OUT("fstart", "Hz", "137500000", "2000000000", 137500000, 2000000000, setStartFrequency, fre);
+ANA_OUT("fstop", "Hz", "137500000", "2000000000", 137500000, 2000000000, setStopFrequency, stop);
+ANA_OUT("steps", "step", "1", "4000", 1, 4000, setSteps, stepsWidget);
+ANA_OUT("fcenter", "Hz", "137500000", "2000000000", 137500000, 2000000000, setCenterFrequency, center);
+TRACE_IN("plot", "Hz", "137500000", "2000000000",137500000, 2000000000,  "dB", "-90", "20", 0, 1023, plot);
 
 ANA_IN("pin", "dBm", "-90", "20", 0, 1023, inputPower);
 const EventData initEvent PROGMEM = {registeredEntries};

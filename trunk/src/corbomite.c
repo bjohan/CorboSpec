@@ -75,11 +75,23 @@ void reportTraceInData(const CorbomiteData *d)
 	readCorbomiteDataP(d, &tmpData);
 	transmitStringP(tmpData.traceInData.xUnit);
 	transmitStringP(sp);
-	transmitStringP(tmpData.traceInData.xUnitScale);
+	transmitStringP(tmpData.traceInData.xMinUnit);
+	transmitStringP(sp);
+	transmitStringP(tmpData.traceInData.xMaxUnit);
+	transmitStringP(sp);
+	transmitInt(tmpData.traceInData.xMinRaw);
+	transmitStringP(sp);
+	transmitInt(tmpData.traceInData.xMaxRaw);
 	transmitStringP(sp);
 	transmitStringP(tmpData.traceInData.yUnit);
 	transmitStringP(sp);
-	transmitStringP(tmpData.traceInData.yUnitScale);
+	transmitStringP(tmpData.traceInData.yMinUnit);
+	transmitStringP(sp);
+	transmitStringP(tmpData.traceInData.yMaxUnit);
+	transmitStringP(sp);
+	transmitInt(tmpData.traceInData.yMinRaw);
+	transmitStringP(sp);
+	transmitInt(tmpData.traceInData.yMaxRaw);
 }
 
 void reportWeightHintData(const CorbomiteData *d)

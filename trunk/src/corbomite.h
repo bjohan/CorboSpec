@@ -27,16 +27,24 @@ const CorbomiteEntry varName PROGMEM = { ANALOG_IN, varName ## _id, \
 					(CorbomiteData*)&varName ## _data}
 
 
-#define TRACE_IN(id, xUnit, xUnitScale, yUnit, yUnitScale, varName)\
+#define TRACE_IN(id, xUnit, xMinUnit, xMaxUnit, xMinRaw, xMaxRaw, yUnit, yMinUnit, yMaxUnit, yMinRaw, yMaxRaw, varName)\
 const char varName ## _id[] PROGMEM = id;\
 const char varName ## _x_unit[] PROGMEM = xUnit;\
-const char varName ## _x_unit_scale[] PROGMEM = xUnitScale;\
+const char varName ## _x_min_unit[] PROGMEM = xMinUnit;\
+const char varName ## _x_max_unit[] PROGMEM = xMaxUnit;\
 const char varName ## _y_unit[] PROGMEM = yUnit;\
-const char varName ## _y_unit_scale[] PROGMEM = yUnitScale;\
+const char varName ## _y_min_unit[] PROGMEM = yMinUnit;\
+const char varName ## _y_max_unit[] PROGMEM = yMaxUnit;\
 const TraceInData varName ## _data PROGMEM = {varName ## _x_unit, \
-					varName ## _x_unit_scale, \
+					varName ## _x_min_unit, \
+					varName ## _x_max_unit, \
+					xMinRaw, \
+					xMaxRaw, \
 					varName ## _y_unit,\
-					varName ## _y_unit_scale};\
+					varName ## _y_min_unit, \
+					varName ## _y_max_unit, \
+					xMinRaw, \
+					xMaxRaw};\
 const CorbomiteEntry varName PROGMEM = { TRACE_IN, varName ## _id, \
 					(CorbomiteData*)&varName ## _data}
 
@@ -149,9 +157,15 @@ typedef struct{
 
 typedef struct{
 	const char *xUnit;
-	const char *xUnitScale;
+	const char *xMinUnit;
+	const char *xMaxUnit;
+	int32_t xMinRaw;
+	int32_t xMaxRaw;
 	const char *yUnit;
-	const char *yUnitScale;
+	const char *yMinUnit;
+	const char *yMaxUnit;
+	int32_t yMinRaw;
+	int32_t yMaxRaw;
 }TraceInData;
 
 typedef void (* const EventCallback)(void);
