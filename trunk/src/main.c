@@ -15,8 +15,8 @@ uint64_t stopFreq = 135e6;
 uint64_t centerFreq = 135e6;
 uint64_t steps = 1;
 uint64_t stepSize = 0;
-uint32_t currentStep = 0;
-uint32_t currentFreq = 0;
+uint64_t currentStep = 0;
+uint64_t currentFreq = 0;
 
 
 void setSteps(int32_t s)
@@ -63,19 +63,19 @@ void toggleCw(uint8_t cw)
 
 void setCenterFrequency(int32_t f)
 {
-	centerFreq = ((uint64_t)f);
+	centerFreq = ((uint64_t)f<<2);
 	//if(cwEnable)
 	//	setFrequency(5e7, currentFreq);
 }
 
 void setStopFrequency(int32_t f)
 {
-	stopFreq = ((uint64_t)f);
+	stopFreq = ((uint64_t)f<<2);
 }
 
 void setStartFrequency(int32_t f)
 {
-	startFreq = ((uint64_t)f);
+	startFreq = ((uint64_t)f<<2);
 }
 
 void initAdc()
@@ -100,13 +100,13 @@ EVENT_OUT("sweep", testCommand, testCmd);
 
 INFORMATION_HINT("test hest", testHint);
  
-ANA_OUT("fstart", "Hz", "137500000", "2000000000", 137500000, 2000000000, setStartFrequency, fre);
-ANA_OUT("fstop", "Hz", "137500000", "2000000000", 137500000, 2000000000, setStopFrequency, stop);
+ANA_OUT("fstart", "Hz", "137500000", "4400000000", 137500000/4, 4400000000/4, setStartFrequency, fre);
+ANA_OUT("fstop", "Hz", "137500000", "4400000000", 137500000/4, 4400000000/4, setStopFrequency, stop);
 ANA_OUT("steps", "step", "1", "4000", 1, 4000, setSteps, stepsWidget);
-ANA_OUT("fcenter", "Hz", "137500000", "2000000000", 137500000, 2000000000, setCenterFrequency, center);
-TRACE_IN("plot", "Hz", "137500000", "2000000000",137500000, 2000000000,  "dB", "-90", "20", 0, 1023, plot);
+ANA_OUT("fcenter", "Hz", "137500000", "4400000000", 137500000/4, 4400000000/4, setCenterFrequency, center);
+TRACE_IN("plot", "Hz", "137500000", "4400000000",137500000/4, 4400000000/4,  "dB", "-90", "20", 0, 573, plot);
 
-ANA_IN("pin", "dBm", "-90", "20", 0, 1023, inputPower);
+ANA_IN("pin", "dBm", "-90", "20", 0, 573, inputPower);
 const EventData initEvent PROGMEM = {registeredEntries};
 
 const CorbomiteEntry init PROGMEM = 
@@ -158,7 +158,7 @@ int main(void)
 				setFrequency(5e7, currentFreq);
 				waitTransmissionIdle();
 				v = readAdc(1);
-				transmitTraceIn(&plot, currentFreq, v);
+				transmitTraceIn(&plot, currentFreq>>2, v);
 				if(currentStep > steps)
 					sweepEnable = 0;
 				currentFreq += stepSize;
