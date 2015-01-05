@@ -43,8 +43,8 @@ const TraceInData varName ## _data PROGMEM = {varName ## _x_unit, \
 					varName ## _y_unit,\
 					varName ## _y_min_unit, \
 					varName ## _y_max_unit, \
-					xMinRaw, \
-					xMaxRaw};\
+					yMinRaw, \
+					yMaxRaw};\
 const CorbomiteEntry varName PROGMEM = { TRACE_IN, varName ## _id, \
 					(CorbomiteData*)&varName ## _data}
 
