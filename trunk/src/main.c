@@ -17,7 +17,12 @@ uint64_t steps = 1;
 uint64_t stepSize = 0;
 uint64_t currentStep = 0;
 uint64_t currentFreq = 0;
+uint32_t shift = 0;
 
+void setAverages(int32_t a)
+{
+    shift = a;
+}
 
 void setSteps(int32_t s)
 {
@@ -88,10 +93,15 @@ void initAdc()
 
 uint16_t readAdc(uint8_t ch)
 {
-	ADMUX = (ADMUX&0xF8)| (ch&7);
-	ADCSRA |= _BV(ADSC);
-	while(ADCSRA & _BV(ADSC));
-	return ADC;
+        uint32_t sum = 0;
+        uint16_t n = 1 << shift;
+        while(n--){
+	        ADMUX = (ADMUX&0xF8)| (ch&7);
+	        ADCSRA |= _BV(ADSC);
+	        while(ADCSRA & _BV(ADSC));
+    	        sum+= ADC;
+        }
+    return sum >> shift;
 }
 DIG_OUT("pwr", powerLed, powerLedCmd);
 DIG_OUT("cw", toggleCw, cwCmd);
@@ -104,6 +114,7 @@ ANA_OUT("fstart", "Hz", "137500000", "4400000000", 137500000/4, 4400000000/4, se
 ANA_OUT("fstop", "Hz", "137500000", "4400000000", 137500000/4, 4400000000/4, setStopFrequency, stop);
 ANA_OUT("steps", "step", "1", "4000", 1, 4000, setSteps, stepsWidget);
 ANA_OUT("fcenter", "Hz", "137500000", "4400000000", 137500000/4, 4400000000/4, setCenterFrequency, center);
+ANA_OUT("avgs", "2^n", "0", "7", 0, 7, setAverages, averages);
 TRACE_IN("plot", "Hz", "137500000", "4400000000",137500000/4, 4400000000/4,  "dB", "-90", "20", 0, 573, plot);
 
 ANA_IN("pin", "dBm", "-90", "20", 0, 573, inputPower);
@@ -118,6 +129,7 @@ const CorbomiteEntry last PROGMEM = {LASTTYPE, "", 0};
 
 const CorbomiteEntry * const entries[] PROGMEM = {
 	&testHint,
+        &averages,
 	&fre,
 	&stop,
 	&stepsWidget,
