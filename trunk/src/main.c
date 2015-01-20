@@ -99,9 +99,9 @@ uint16_t readAdc(uint8_t ch)
 	        ADMUX = (ADMUX&0xF8)| (ch&7);
 	        ADCSRA |= _BV(ADSC);
 	        while(ADCSRA & _BV(ADSC));
-    	        sum+= ADC;
+    	        sum += ADC;
         }
-    return sum >> shift;
+    return (sum<<4) >> shift;
 }
 DIG_OUT("pwr", powerLed, powerLedCmd);
 DIG_OUT("cw", toggleCw, cwCmd);
@@ -114,10 +114,10 @@ ANA_OUT("fstart", "Hz", "137500000", "4400000000", 137500000/4, 4400000000/4, se
 ANA_OUT("fstop", "Hz", "137500000", "4400000000", 137500000/4, 4400000000/4, setStopFrequency, stop);
 ANA_OUT("steps", "step", "1", "4000", 1, 4000, setSteps, stepsWidget);
 ANA_OUT("fcenter", "Hz", "137500000", "4400000000", 137500000/4, 4400000000/4, setCenterFrequency, center);
-ANA_OUT("avgs", "2^n", "0", "7", 0, 7, setAverages, averages);
-TRACE_IN("plot", "Hz", "137500000", "4400000000",137500000/4, 4400000000/4,  "dB", "-90", "20", 0, 573, plot);
+ANA_OUT("avgs", "2^n", "0", "10", 0, 10, setAverages, averages);
+TRACE_IN("plot", "Hz", "137500000", "4400000000",137500000/4, 4400000000/4,  "dB", "-90", "20", 0, 573<<4, plot);
 
-ANA_IN("pin", "dBm", "-90", "20", 0, 573, inputPower);
+ANA_IN("pin", "dBm", "-90", "20", 0, 573<<4, inputPower);
 const EventData initEvent PROGMEM = {registeredEntries};
 
 const CorbomiteEntry init PROGMEM = 
