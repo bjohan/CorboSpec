@@ -83,6 +83,11 @@ void setStartFrequency(int32_t f)
 	startFreq = ((uint64_t)f<<2);
 }
 
+void setSampleRate(int32_t r)
+{
+	ADCSRA = _BV(ADEN) | (r&0x07);
+}
+
 void initAdc()
 {
 	ADMUX = _BV(REFS0) | _BV(MUX0); //Setup adc using external reference and ch1
@@ -116,8 +121,8 @@ ANA_OUT("steps", "step", "1", "4000", 1, 4000, setSteps, stepsWidget);
 ANA_OUT("fcenter", "Hz", "137500000", "4400000000", 137500000/4, 4400000000/4, setCenterFrequency, center);
 ANA_OUT("avgs", "2^n", "0", "10", 0, 10, setAverages, averages);
 TRACE_IN("plot", "Hz", "137500000", "4400000000",137500000/4, 4400000000/4,  "dB", "-90", "20", 0, 573<<4, plot);
-
 ANA_IN("pin", "dBm", "-90", "20", 0, 573<<4, inputPower);
+ANA_OUT("srate", "div", "0", "7", 0, 7, setSampleRate, srate);
 const EventData initEvent PROGMEM = {registeredEntries};
 
 const CorbomiteEntry init PROGMEM = 
@@ -140,6 +145,7 @@ const CorbomiteEntry * const entries[] PROGMEM = {
 	&inputPower,
 	&lockDetect,
 	&plot,
+        &srate,
 	&testHint,
 	&init, &last
 };
