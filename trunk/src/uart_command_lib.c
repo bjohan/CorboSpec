@@ -205,7 +205,8 @@ void initUsart()
 	DDRD |= 0x02;
         DDRD = 2;
 	UBRR0H = 0;
-        UBRR0L = 36*2+1;//576/8;
+        UBRR0L = 35;
+        //UBRR0L = 36*2+1;//576/8;
         //UBRR0 = 576/8;
         UCSR0B = _BV(RXEN0)  | _BV(RXCIE0) | _BV(TXCIE0) | _BV(TXEN0);
         UCSR0C = _BV(UCSZ00) | _BV(UCSZ01) ;
