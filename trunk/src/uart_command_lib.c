@@ -408,9 +408,9 @@ void commandLine(void)
 		}else if(rxTmpBuf[n] == '\r' && lastByte != '\\'){
 			if(cmdBufPtr >= 3){
 				cmdBuf[cmdBufPtr-1] = '\0';
-				transmitString("S:");
+				//transmitString("S:");
 				transmitString(cmdBuf);
-				transmitString(":E");
+				//transmitString(":E");
 				corbomiteParse(cmdBuf);
 				cmdBufPtr = 0;
 			}

@@ -106,6 +106,7 @@ void reportSignal(const CorbomiteEntry *e)
 {
 	if(e->t < LASTTYPE){
 		transmitStringP(fs);
+                transmitStringP(PSTR("info "));
 		transmitStringP(layoutCommands[e->t]);
 		transmitStringP(e->id);
 		transmitStringP(sp);
@@ -163,7 +164,7 @@ void readCorbomiteDataP(const CorbomiteData *src, CorbomiteData *dst)
 void registeredEntries()
 {
 	uint8_t n = 0;
-	transmitString("Registered entries:\r\n");	
+	//transmitString("Registered entries:\r\n");	
 	readEntryPP(&entries[n], &tmpEntry);
 	while(tmpEntry.t != LASTTYPE){
 		reportSignal(&tmpEntry);
@@ -234,15 +235,15 @@ void corbomiteParse(char * line)
 			while(tmpEntry.t != LASTTYPE){
 				i++;
 				if(strcmp_pn(tmpEntry.id, token)==0){
-					transmitString("Found command\n\r");
+					//transmitString("Found command\n\r");
 					processCorbomiteCall(&tmpEntry, line);
 					transmitStringP(idle);
 					return;
 				}
 				//pgm_copy(&entries[i], (uint8_t *)&w, sizeof(w));
 				readEntryPP(&entries[i], &tmpEntry);
-				transmitStringP(PSTR("Widget loaded: "));
-				transmitStringP(tmpEntry.id);
+				//transmitStringP(PSTR("Widget loaded: "));
+				//transmitStringP(tmpEntry.id);
 				transmitStringP(nl);
 			}
 			transmitStringP(PSTR("ERROR: Command not found\r\n"));
