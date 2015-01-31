@@ -120,8 +120,9 @@ ANA_OUT("fstop", "Hz", "137500000", "4400000000", 137500000/4, 4400000000/4, set
 ANA_OUT("steps", "step", "1", "4000", 1, 4000, setSteps, stepsWidget);
 ANA_OUT("fcenter", "Hz", "137500000", "4400000000", 137500000/4, 4400000000/4, setCenterFrequency, center);
 ANA_OUT("avgs", "2^n", "0", "10", 0, 10, setAverages, averages);
-TRACE_IN("plot", "Hz", "137500000", "4400000000",137500000/4, 4400000000/4,  "dB", "-90", "20", 0, 573<<4, plot);
-ANA_IN("pin", "dBm", "-90", "20", 0, 573<<4, inputPower);
+TRACE_IN("plot", "Hz", "137500000", "4400000000",137500000/4, 4400000000/4,  "dB", "-99.5", "7", 249, 9048, plot);
+//ANA_IN("pin", "dBm", "-99.5", "8", 0, 573<<4, inputPower);
+ANA_IN("pin", "dBm", "-93.5", "6", 249, 9048, inputPower);
 ANA_OUT("srate", "div", "0", "7", 0, 7, setSampleRate, srate);
 const EventData initEvent PROGMEM = {registeredEntries};
 
