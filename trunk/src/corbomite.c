@@ -207,7 +207,6 @@ void processCorbomiteCall(const CorbomiteEntry *e, char *l)
 				break;
 		}
 	}
-	transmitStringP(PSTR("\r\n"));
 	
 }
 
@@ -244,7 +243,7 @@ void corbomiteParse(char * line)
 				readEntryPP(&entries[i], &tmpEntry);
 				//transmitStringP(PSTR("Widget loaded: "));
 				//transmitStringP(tmpEntry.id);
-				transmitStringP(nl);
+				//transmitStringP(nl);
 			}
 			transmitStringP(PSTR("ERROR: Command not found\r\n"));
 			transmitString(line);

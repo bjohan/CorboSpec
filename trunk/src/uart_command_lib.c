@@ -409,7 +409,7 @@ void commandLine(void)
 			if(cmdBufPtr >= 3){
 				cmdBuf[cmdBufPtr-1] = '\0';
 				//transmitString("S:");
-				transmitString(cmdBuf);
+				//transmitString(cmdBuf);
 				//transmitString(":E");
 				corbomiteParse(cmdBuf);
 				cmdBufPtr = 0;
