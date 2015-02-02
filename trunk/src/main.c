@@ -98,6 +98,8 @@ void initAdc()
 
 uint16_t readAdc(uint8_t ch)
 {
+        if(shift > 7)
+            transmitBusy();
         uint32_t sum = 0;
         uint16_t n = 1 << shift;
         while(n--){
@@ -106,6 +108,8 @@ uint16_t readAdc(uint8_t ch)
 	        while(ADCSRA & _BV(ADSC));
     	        sum += ADC;
         }
+        if(shift > 7)
+            transmitIdle();
     return (sum<<4) >> shift;
 }
 DIG_OUT("pwr", powerLed, powerLedCmd);

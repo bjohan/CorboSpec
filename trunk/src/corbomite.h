@@ -221,8 +221,6 @@ void traceAddPoint(const char *pbid, const char *trace, int16_t x, int16_t y);
 void traceLegend(const char *pid, const char *trace, const char *legend);
 void traceColor(const char *pid, const char *trace, uint8_t r, uint8_t g, 
 						uint8_t b);
-
-
 void registeredEntries();
 extern const CorbomiteEntry *const entries[];
 extern CorbomiteEntry tmpEntry;
@@ -242,3 +240,6 @@ void transmitTraceIn(const CorbomiteEntry *e, int32_t x, int32_t y);
 void transmitTraceClear(const CorbomiteEntry *e);
 void transmitProlog(const CorbomiteEntry *e);
 void transmitEpilog(const CorbomiteEntry *e);
+
+void transmitBusy();
+void transmitIdle();

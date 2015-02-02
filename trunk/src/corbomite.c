@@ -480,3 +480,13 @@ void transmitEpilog(const CorbomiteEntry *e)
 {
 	transmitStringP(fe);
 }
+
+void transmitIdle()
+{
+    transmitStringP(PSTR("#idle\r\n"));
+}
+
+void transmitBusy()
+{
+    transmitStringP(PSTR("#busy\r\n"));
+}
