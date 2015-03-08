@@ -172,6 +172,11 @@ void registeredEntries()
 		readEntryPP(&entries[n], &tmpEntry);
 	}
 }
+
+void processInfo(char *l)
+{
+}
+
 void processCorbomiteCall(const CorbomiteEntry *e, char *l)
 {
 	//transmitStringP(PSTR("Entry found: "));
@@ -202,7 +207,10 @@ void processCorbomiteCall(const CorbomiteEntry *e, char *l)
 			case TEXT_IO:
 				data.textIoData.callback(getTokenPointer(l,2));
 			break;
-				
+			
+			case INFO:
+				processInfo(l);
+			break;	
 			default:
 				break;
 		}
@@ -371,6 +379,7 @@ void transmitAnalogIn(const CorbomiteEntry *e, int32_t s)
 	//transmitStringP(fs);
 	//transmitStringP(tmpEntry.id);
 	//transmitStringP(sp);
+	*e->data->analogInData.lastRaw = s;
 	transmitProlog(e);
 	transmitInt(s);
 	transmitStringP(fe);

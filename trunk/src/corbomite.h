@@ -129,12 +129,14 @@ typedef const enum {
 	HINT_WEIGHT,
 	HINT_CONTINUE_LINE,
 	HINT_PLOT,
+	INFO,
 	LASTTYPE,
 } CorbomiteType;
 
 typedef void (* const DigitalCallback)(uint8_t);
 typedef struct{
 	DigitalCallback callback;
+	uint8_t *last;
 }DigitalData;
 
 typedef void (* const AnalogCallback)(int32_t);
@@ -145,6 +147,7 @@ typedef struct{
 	const char *maxUnit;
 	int32_t minRaw;
 	int32_t maxRaw;
+	int32_t *lastRaw;
 }AnalogOutData;
 
 typedef struct{
@@ -153,6 +156,7 @@ typedef struct{
 	const char *maxUnit;
 	int32_t minRaw;
 	int32_t maxRaw;
+	int32_t *lastRaw;
 }AnalogInData;
 
 typedef struct{
@@ -240,6 +244,5 @@ void transmitTraceIn(const CorbomiteEntry *e, int32_t x, int32_t y);
 void transmitTraceClear(const CorbomiteEntry *e);
 void transmitProlog(const CorbomiteEntry *e);
 void transmitEpilog(const CorbomiteEntry *e);
-
 void transmitBusy();
 void transmitIdle();
